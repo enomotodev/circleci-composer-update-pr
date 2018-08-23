@@ -37,11 +37,8 @@ jobs:
     working_directory: /work
     steps:
       - run:
-          name: Install System Dependencies
-          command: apk add --update --no-cache tzdata
-      - run:
           name: Set timezone to Asia/Tokyo
-          command: cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+          command: echo "date.timezone=Asia/Tokyo" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
       - checkout
       - restore_cache:
           name: Restore composer cache
