@@ -1,6 +1,14 @@
 {
     "name": "enomotodev/circleci-composer-update-pr",
+    "description": "Create PullRequest of composer update in CircleCI",
+    "keywords": ["composer", "circleci", "github"],
+    "license": "MIT",
     "type": "library",
+    "homepage": "https://enomotodev.hatenablog.com/",
+    "support": {
+        "issues": "https://github.com/enomotodev/circleci-composer-update-pr/issues",
+        "source": "https://github.com/enomotodev/circleci-composer-update-pr"
+    },
     "authors": [
         {
             "name": "enomotodev",
