@@ -43,7 +43,8 @@ class Command
 
         $accessToken = getenv('GITHUB_ACCESS_TOKEN');
         $repositoryName = getenv('CIRCLE_PROJECT_REPONAME');
-        $repositoryFullName = getenv('CIRCLE_PROJECT_USERNAME') . '/' . $repositoryName;
+        $repositoryUserName = getenv('CIRCLE_PROJECT_USERNAME');
+        $repositoryFullName = "{$repositoryUserName}/{$repositoryName}";
 
         $this->setupGit($accessToken, $repositoryFullName, $name, $email);
 
@@ -67,7 +68,7 @@ class Command
         }
 
         $this->createBranch($branch);
-        $this->createPullRequest($accessToken, $repositoryName, $name, $base, $branch, $now, $text);
+        $this->createPullRequest($accessToken, $repositoryName, $repositoryUserName, $base, $branch, $now, $text);
     }
 
     /**
@@ -101,14 +102,14 @@ class Command
     /**
      * @param  string $accessToken
      * @param  string $repositoryName
-     * @param  string $name
+     * @param  string $repositoryUserName
      * @param  string $base
      * @param  string $branch
      * @param  \DateTime $now
      * @param  string $text
      * @return void
      */
-    private function createPullRequest($accessToken, $repositoryName, $name, $base, $branch, $now, $text)
+    private function createPullRequest($accessToken, $repositoryName, $repositoryUserName, $base, $branch, $now, $text)
     {
         $title = 'composer update at ' . $now->format('Y-m-d H:i:s T');
 
@@ -117,7 +118,7 @@ class Command
         /** @var \Github\Api\PullRequest $api */
         $api = $client->api('pull_request');
         try {
-            $api->create($name, $repositoryName, [
+            $api->create($repositoryUserName, $repositoryName, [
                 'base' => $base,
                 'head' => $branch,
                 'title' => $title,
