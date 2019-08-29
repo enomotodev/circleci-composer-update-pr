@@ -56,7 +56,11 @@ class Command
             if (!empty($diff[$key])) {
                 $text .= "### {$key}" . PHP_EOL;
                 foreach ($diff[$key] as $packageName => $value) {
-                    $text .= "- {$packageName}: ";
+                    if ($value[3]) {
+                        $text .= "- [{$packageName}]({$value[3]}): ";
+                    } else {
+                        $text .= "- {$packageName}: ";
+                    }
                     if ($value[2]) {
                         $text .= "[`{$value[0]}...{$value[1]}`]({$value[2]})";
                     } else {
